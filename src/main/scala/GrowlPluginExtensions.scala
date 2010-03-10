@@ -11,8 +11,7 @@ import sbt._
  */
 case class GroupResult(
  name: String, status: Result.Value, 
- count: Int, failures: Int, errors: Int, skipped: Int,
- messages: Seq[String]
+ count: Int, failures: Int, errors: Int, skipped: Int
 )
 
 /** Output formatting info for growl notification 
@@ -58,14 +57,13 @@ trait GrowlPluginExtensions {
       GrowlResultFormat(
         Some(res.name),
         (res.status match {
-          case Result.Error  => "Error %s"
+          case Result.Error  => "Error in %s"
           case Result.Passed => "Passed %s"
           case Result.Failed => "Failed %s"
         }) format res.name, 
         "Tests %s, Failed %s, Errors %s, Skipped %s".format(
           res.count, res.failures, res.errors, res.skipped
-        ) + 
-        "\n\n" + res.messages.mkString("\n"),  
+        ),  
         res.status match {
           case Result.Error | Result.Failed => true
           case _ => false
