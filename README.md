@@ -49,8 +49,7 @@ To provide your own notification formatting
            }) format res.name, 
            "Total %s, F %s, E %s, S %s".format(
              res.count, res.failures, res.errors, res.skipped
-           ) + 
-           "\n\n" + res.messages.mkString("\n"),  
+           ),  
            res.status match {
              case Result.Error | Result.Failed => true
              case _ => false
