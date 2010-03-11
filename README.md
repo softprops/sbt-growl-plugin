@@ -15,7 +15,7 @@ To install, create a `Plugins.scala` file under your `project/plugins/` in your 
     import sbt._
     class Plugins(info: ProjectInfo) extends PluginDefinition(info) {
       val lessRepo = "lessis repo" at "http://repo.lessis.me"
-      val growl = "me.lessis" % "sbt-growl-plugin" % "0.0.3"
+      val growl = "me.lessis" % "sbt-growl-plugin" % "0.0.4"
     }
 
 Then decorate your project definition under `project/build/` with `GrowlPlugin`
