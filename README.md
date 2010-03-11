@@ -3,10 +3,6 @@
 An [sbt](http://code.google.com/p/simple-build-tool/) plugin that growls test results
 
 ## Install
-
-Sbt Growl Plugin is [cross built](http://code.google.com/p/simple-build-tool/wiki/CrossBuild) over the following verions versions of scala.
-
-    2.7.3, 2.7.4, 2.7.5, 2.7.6, 2.7.7
    
 ### via sbt
  
