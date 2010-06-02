@@ -22,7 +22,7 @@ Then decorate your project definition under `project/build/` with `GrowlPlugin`
 To provide notification images
 
     import sbt._
-    class YourProject(info: ProjectInfo) extends DefaultProject(info) with growl.GrowlingTests {
+    class Project(info: ProjectInfo) extends DefaultProject(info) with growl.GrowlingTests {
       override val growlTestImages = GrowlTestImages(
         Some("/path/to/pass.png"), 
         Some("/path/to/fail.png"), 
@@ -33,7 +33,7 @@ To provide notification images
 To provide your own notification formatting
     
     import sbt._
-    class YourProject(info: ProjectInfo) extends DefaultProject(info) with growl.GrowlingTests {
+    class Project(info: ProjectInfo) extends DefaultProject(info) with growl.GrowlingTests {
       override val growlResultFormatter = 
        (res: GroupResult) =>
          GrowlResultFormat(
