@@ -1,4 +1,4 @@
-# Sbt Growl Plugin
+# Growling Tests
 
 An [sbt](http://code.google.com/p/simple-build-tool/) plugin that growls test results
 
