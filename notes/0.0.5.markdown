@@ -1,0 +1,5 @@
+* renamed plugin to `growling tests`
+* added growl namespace
+* [posterous][1] integration
+
+[1]: http://github.com/n8han/posterous-sbt

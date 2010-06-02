@@ -1,6 +1,6 @@
 import sbt._
 
-class GrowlPluginProject(info: ProjectInfo) extends PluginProject(info) {
+class GrowlPluginProject(info: ProjectInfo) extends PluginProject(info) with posterous.Publish {
   val stSnapshots = "Scala Tools Snapshots" at "http://www.scala-tools.org/repo-snapshots/"
   val specs = "org.scala-tools.testing" % "specs" % "1.6.2.1-SNAPSHOT" % "test"
   
