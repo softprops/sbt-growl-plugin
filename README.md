@@ -17,12 +17,12 @@ To install, create a `Plugins.scala` file under your `project/plugins/` in your 
 Then decorate your project definition under `project/build/` with `GrowlPlugin`
 
     import sbt._
-    class YourProject(info: ProjectInfo) extends DefaultProject(info) with GrowlPlugin 
+    class Project(info: ProjectInfo) extends DefaultProject(info) with growl.GrowlingTests 
 
 To provide notification images
 
     import sbt._
-    class YourProject(info: ProjectInfo) extends DefaultProject(info) with GrowlPlugin {
+    class YourProject(info: ProjectInfo) extends DefaultProject(info) with growl.GrowlingTests {
       override val growlTestImages = GrowlTestImages(
         Some("/path/to/pass.png"), 
         Some("/path/to/fail.png"), 
@@ -33,7 +33,7 @@ To provide notification images
 To provide your own notification formatting
     
     import sbt._
-    class YourProject(info: ProjectInfo) extends DefaultProject(info) with GrowlPlugin {
+    class YourProject(info: ProjectInfo) extends DefaultProject(info) with growl.GrowlingTests {
       override val growlResultFormatter = 
        (res: GroupResult) =>
          GrowlResultFormat(
