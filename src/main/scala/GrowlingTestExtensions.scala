@@ -1,3 +1,5 @@
+package growl
+
 import sbt._
 
 /** Encapsulates info about a group test result 
@@ -29,7 +31,7 @@ case class GrowlResultFormat(
 case class GrowlTestImages(pass: Option[String], fail: Option[String], error: Option[String])
 
 /** Mixin for Growl plugin extensions */
-trait GrowlPluginExtensions {
+trait GrowlingTestExtensions {
   
   /** Default test images */
   val growlTestImages = GrowlTestImages(None, None, None)

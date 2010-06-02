@@ -1,8 +1,10 @@
+package growl
+
 import sbt._
 import org.scalatools.testing.{Logger => TLogger, Event => TEvent, Result => TResult}
 
 /** GrowlTestReportListener will Growl test results and messages */
-class GrowlTestReportListener(extensions: GrowlPluginExtensions) extends TestReportListener {
+class GrowlingTestReportListener(extensions: GrowlingTestExtensions) extends TestReportListener {
   import meow._
   
   private var skipped, errors, passed, failures = 0 
