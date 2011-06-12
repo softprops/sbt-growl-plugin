@@ -44,9 +44,9 @@ object GrowlingTests extends Plugin {
               case _ => false
             },
             res.status match {
-              case TestResult.Error  => None //growlTestImages.identity.error
-              case TestResult.Passed => None //growlTestImages.identity.pass
-              case TestResult.Failed => None //growlTestImages.identitiy.fail
+              case TestResult.Error  => imgs.error
+              case TestResult.Passed => imgs.pass
+              case TestResult.Failed => imgs.fail
             }
           )
     },
