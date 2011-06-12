@@ -1,0 +1,3 @@
+Updated implementation for the sbt 0.10.0 line.
+
+Trait members have been converted to settings `growl-test-images`, `growl-result-formatter`, `growl-exception-formatter`, and `growl-default-image-path`
