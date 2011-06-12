@@ -1,3 +1,9 @@
 Updated implementation for the sbt 0.10.0 line.
 
 Trait members have been converted to settings `growl-test-images`, `growl-result-formatter`, `growl-exception-formatter`, and `growl-default-image-path`
+
+Install using a `foo/project/plugins/build.sbt` file containing
+
+    libraryDependencies += "me.lessis" %% "sbt-growl-plugin" % "0.1.0"
+
+    resolvers += "less is" at "http://repo.lessis.me"
