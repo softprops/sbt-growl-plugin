@@ -17,7 +17,7 @@ object GrowlingTests extends Plugin {
         new GrowlingTestReportListener(resFmt, expFmt, defaultPath)
     }
 
-  override def settings = Seq(
+  def growlSettings: Seq[Setting[_]] = Seq(
     growlTestImages := GrowlTestImages(None, None, None),
     growlExceptionFormatter := { (name: String, t: Throwable) =>
       GrowlResultFormat(
