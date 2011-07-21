@@ -4,7 +4,7 @@ name := "sbt-growl-plugin"
 
 organization := "me.lessis"
 
-version := "0.1.1-SNAPSHOT"
+version <<= sbtVersion("0.1.1-%s-SNAPSHOT" format _)
 
 resolvers += "less is" at "http://repo.lessis.me"
 
