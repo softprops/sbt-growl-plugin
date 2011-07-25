@@ -1,0 +1,10 @@
+* Added a plugin specific config, `Growl`, settings are now namespaced with `growl:*`
+
+* Now appends sbt version to library version to work across multiple version of sbt. When declaring library dependency use
+
+    libraryDependencies <+= sbtVersion("me.lessis" %% "" % "0.1.1-%s".format(_))
+
+*  No more auto injection of settings. Explicitly add them with
+
+    seq(growl.GrowlingTests.growlSettings: _*)
+
