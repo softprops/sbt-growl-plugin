@@ -1,5 +1,9 @@
 * Added a plugin specific config, `Growl`, settings are now namespaced with `growl:*`
 
+* Fixed issue with `sticky` notifications
+
+* Broke formatters into `GroupFormatter` for test groups and `AggregateFormatter` for the summation of test results
+
 * Now appends sbt version to library version to work across multiple version of sbt. When declaring library dependency use
 
     libraryDependencies <+= sbtVersion("me.lessis" %% "" % "0.1.1-%s".format(_))
