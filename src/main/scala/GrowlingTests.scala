@@ -34,13 +34,12 @@ object GrowlingTests extends Plugin {
         (res: GroupResult) =>
           GrowlResultFormat(
             Some(res.name),
-            (res.status match {
-              case TestResult.Error  => "%s had Errors"
-              case TestResult.Passed => "%s Passed"
-              case TestResult.Failed => "%s Failed"
-              case s => "what is %s?".format(s) + " %s"
-            }) format res.name,
-            "",
+            res.name,
+            res.status match {
+              case TestResult.Error  => "Had Errors"
+              case TestResult.Passed => "Passed"
+              case TestResult.Failed => "Failed"
+            },
             res.status match {
               case TestResult.Error | TestResult.Failed => true
               case _ => false
