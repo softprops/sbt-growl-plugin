@@ -6,7 +6,7 @@ organization := "me.lessis"
 
 posterousNotesVersion := "0.1.1"
 
-version <<= (posterousNotesVersion, sbtVersion)("%s-%s-SNAPSHOT" format(_, _))
+version <<= (posterousNotesVersion, sbtVersion)("%s-%s" format(_, _))
 
 resolvers += "less is" at "http://repo.lessis.me"
 
