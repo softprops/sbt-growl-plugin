@@ -10,7 +10,7 @@ To install, create a `build.sbt` file under `project/plugins/` in your sbt proje
 
     resolvers += "less is" at "http://repo.lessis.me"
 
-    libraryDependencies += "me.lessis" %% "sbt-growl-plugin" % "0.1.0"
+    libraryDependencies += "me.lessis" %% "sbt-growl-plugin" % "0.1.1"
 
 Then run your tests with the `test` task. If you have [growl](http://growl.info/) installed you should get test feedback as growl notifications
 
