@@ -1,10 +1,8 @@
 # Growling Tests
 
-An [sbt](https://github.com/harrah/xsbt#readme) [0.10.0](http://typesafe.artifactoryonline.com/typesafe/ivy-releases/org.scala-tools.sbt/sbt-launch/0.10.0/sbt-launch.jar) plugin that growls test results.
+An [sbt](https://github.com/harrah/xsbt#readme) 0.10.* plugin that growls test results.
 
 ## Install
-
-### via sbt
 
 To install, create a `build.sbt` file under `project/plugins/` in your sbt project
 
@@ -14,7 +12,7 @@ To install, create a `build.sbt` file under `project/plugins/` in your sbt proje
 
 Then run your tests with the `test` task. If you have [growl](http://growl.info/) installed you should get test feedback as growl notifications
 
-Failures will `stick` until all tests pass.
+Test failures will `stick` until all tests pass.
 
 ## todo
 
