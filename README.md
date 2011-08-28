@@ -50,7 +50,7 @@ The directory in which Growl looks for icons can be configured by adding this to
 
 You can configure images individually by reconfiguring the GrowlTestImages class.  e.g.
 
-    images in Growl <<= (images in Growl) map (i => i.copy(fail = Some("/better/fail/icon.png")))
+    images in Growl <<= (images in Growl)(i => i.copy(fail = Some("/better/fail/icon.png")))
 
 
 ## todo
