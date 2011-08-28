@@ -37,9 +37,11 @@ Now all your projects will be outfitted with libnotify abilities.  Just run the 
 ## Configuring Icons
 
 By default the growl plugin looks for icons in `~/.sbt/growl/icons/`.  Specifically, it looks for:
-    * `pass.png` - used when tests pass
-    * `fail.png` - used when tests fail
-    * `error.png` - used for catastrophic failures
+
+* `pass.png` - used when tests pass
+* `fail.png` - used when tests fail
+* `error.png` - used for catastrophic failures
+
 If an icon is not found for Growl, the plugin extracts a Scala logo and places it in `~/.sbt/growl/icons/scala-logo.png` to use for notifications.
 
 The directory in which Growl looks for icons can be configured by adding this to your `build.sbt` file:
@@ -53,6 +55,6 @@ You can configure images individually by reconfiguring the GrowlTestImages class
 
 ## todo
 
-    * support like notifiers on other OS's
+* support like notifiers on other OS's
 
 2010-2011 Doug Tangren (softprops) + Josh Suereth (jsuereth)
