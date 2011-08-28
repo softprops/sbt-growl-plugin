@@ -13,6 +13,9 @@ class GrowlTestImages(pass: Option[String], fail: Option[String], error: Option[
   def failIcon = Some(fail.getOrElse(defaultIcon))
   def errorIcon = Some(error.getOrElse(defaultIcon))
 
+  final def copy(pass: Option[String] = passIcon, fail: Option[String] = failIcon, error: Option[String] = errorIcon): GrowlTestImages = 
+    new GrowlTestImages(pass,fail,error)
+
   override def toString = "GrowlTestImages("+passIcon+","+failIcon+","+errorIcon+")"
 }
 
@@ -22,14 +25,12 @@ object GrowlTestImages {
 
   /** The default icon location for everything. */
   lazy val defaultIcon = {
-    // Note: The danger here is that these could *never* be cleaned up, leading to a huge and unwieldy /tmp directory.
-    // We could also think about hiding in the ~/.sbt directory...
-    val dir = IO.createTemporaryDirectory
-    val file = dir / "scala-logo.png"
-    IO.transfer(getClass.getClassLoader.getResourceAsStream("scala-logo.png"), file)
-    file.deleteOnExit
-    dir.deleteOnExit
-    file.getAbsolutePath     
+    val img = file(System.getProperty("user.home")) / ".sbt" / "growl" / "icons" / "scala-logo.png"
+    if(!img.exists) {
+      IO.createDirectory(img.getParentFile)
+      IO.transfer(getClass.getClassLoader.getResourceAsStream("scala-logo.png"), img)
+    }
+    img.getAbsolutePath     
   }
   
 }
