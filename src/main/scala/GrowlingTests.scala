@@ -15,7 +15,7 @@ object GrowlingTests extends Plugin {
   val defaultImagePath = SettingKey[String]("default-image-path", "Default path used to resolve growl test images.")
   val growler = SettingKey[Growler]("growler", "Interface used to growl test results at users.  RRRRRRRRR!")
 
-  override val settings = super.settings ++ posterousSettings
+  override val settings = super.settings ++ growlSettings
 
   private def growlingTestListenerTask: Initialize[sbt.Task[sbt.TestReportListener]] =
     (groupFormatter in Growl, exceptionFormatter in Growl, aggregateFormatter in Growl, growler in Growl, streams) map {
