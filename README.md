@@ -6,33 +6,32 @@ An [sbt](https://github.com/harrah/xsbt#readme) 0.10.* plugin that growls/notifi
 
 ### On Mac
 
-To install, create a `build.sbt` file under `project/plugins/` in your sbt project
-
-    resolvers += "less is" at "http://repo.lessis.me"
-
-    libraryDependencies <+= sbtVersion(v => "me.lessis" %% "sbt-growl-plugin" % "0.1.1-%s".format(v))
-
-Then run your tests with the `test` task. If you have [growl](http://growl.info/) installed you should get test feedback as growl notifications
-
-Test failures will `stick` until all tests pass.
+Install the [growl](http://growl.info/) extra [growlnotify](http://growl.info/extras.php#growlnotify) commandline client, make sure it's in your path and you have growl turned on.
 
 ### On Ubuntu
 
-To install, first ensure that `libnotify-bin` is installed.
+Install the `libnotify-bin` package.
 
     sudo apt-get install libnotify-bin
 
-Then create a `Build.scala` file under `~/.sbt/plugins/project` directory
+### Project Configuration
+
+To install on a per-project basis, create a `build.sbt` file under `project/plugins/` in your sbt project
+
+    resolvers += "less is" at "http://repo.lessis.me"
+
+    libraryDependencies <+= sbtVersion(v => "me.lessis" %% "sbt-growl-plugin" % "0.1.2-%s".format(v))
+
+To install globally, create a `Build.scala` file under `~/.sbt/plugins/project` directory
 
     import sbt._
     object PluginDef extends Build {
       override def projects = Seq(root)
       lazy val root = Project("plugins", file(".")) dependsOn(growl)
-      lazy val growl = uri("git://github.com/jsuereth/xsbt-growl-plugin.git")
+      lazy val growl = uri("git://github.com/softprops/sbt-growl-plugin.git#0.1.2")
     }
 
-Now all your projects will be outfitted with libnotify abilities.  Just run the `test` task and you'll see the magikz.
-
+Run your tests with the sbt `test` task and you'll see the magikz.
 
 ## Configuring Icons
 
