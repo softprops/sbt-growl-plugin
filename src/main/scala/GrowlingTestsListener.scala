@@ -34,9 +34,6 @@ case class GrowlResultFormat(
   id: Option[String], title: String, message: String, sticky: Boolean, imagePath: Option[String]
 )
 
-/** Container for growl test image paths */
-case class GrowlTestImages(pass: Option[String], fail: Option[String], error: Option[String])
-
 /** GrowlTestReportListener will Growl test result notification */
 class GrowlingTestsListener(
   groupFormatter: GroupResult => GrowlResultFormat,

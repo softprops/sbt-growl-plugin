@@ -12,7 +12,7 @@ object GrowlingTests extends Plugin {
   val exceptionFormatter = SettingKey[(String, Throwable) => GrowlResultFormat]("exception-formatter", "Function used to format test exception.")
   val groupFormatter = SettingKey[(GroupResult => GrowlResultFormat)]("group-formatter", "Function used to format a test group result.")
   val aggregateFormatter = SettingKey[(AggregateResult => GrowlResultFormat)]("aggregate-formatter", "Function used to format an aggregation of test results.")
-  val defaultImagePath = SettingKey[String]("default-image-path", "Default path used to resolve growl test images.")
+  val defaultImagePath = SettingKey[File]("default-image-path", "Default path used to resolve growl test images.")
   val growler = SettingKey[Growler]("growler", "Interface used to growl test results at users.  RRRRRRRRR!")
 
   override val settings = super.settings ++ growlSettings
@@ -24,7 +24,13 @@ object GrowlingTests extends Plugin {
     }
 
   def growlSettings: Seq[Setting[_]] = inConfig(Growl)(Seq(
-    images := GrowlTestImages(None, None, None),
+    images <<= defaultImagePath apply { path =>
+      def setIfExists(name: String) = {
+        val file = path / name
+        if(file.exists) Some(file.getAbsolutePath) else None
+      }
+      GrowlTestImages(setIfExists("pass.png"), setIfExists("fail.png"), setIfExists("error.png"))
+    },
     exceptionFormatter := { (name: String, t: Throwable) =>
       GrowlResultFormat(
         Some("%s Exception" format name),
@@ -32,7 +38,7 @@ object GrowlingTests extends Plugin {
         t.getMessage, true, None
       )
     },
-    growler <<= defaultImagePath(Growler.apply),
+    growler := Growler(),
     groupFormatter <<= (images) {
       (imgs) =>
         (res: GroupResult) =>
@@ -49,9 +55,9 @@ object GrowlingTests extends Plugin {
               case _ => false
             },
             res.status match {
-              case TestResult.Error  => imgs.error
-              case TestResult.Passed => imgs.pass
-              case TestResult.Failed => imgs.fail
+              case TestResult.Error  => imgs.errorIcon
+              case TestResult.Passed => imgs.passIcon
+              case TestResult.Failed => imgs.failIcon
             }
           )
     },
@@ -73,13 +79,13 @@ object GrowlingTests extends Plugin {
               case _ => false
             },
             res.status match {
-              case TestResult.Error  => imgs.error
-              case TestResult.Passed => imgs.pass
-              case TestResult.Failed => imgs.fail
+              case TestResult.Error  => imgs.errorIcon
+              case TestResult.Passed => imgs.passIcon
+              case TestResult.Failed => imgs.failIcon
             }
           )
     },
-    defaultImagePath := ""
+    defaultImagePath := file(System.getProperty("user.home")) / ".sbt" / "growl" / "icons"
   )) ++ Seq(
     testListeners <+= growlingTestListenerTask
   )
