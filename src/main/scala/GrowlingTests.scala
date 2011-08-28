@@ -13,11 +13,12 @@ object GrowlingTests extends Plugin {
   val groupFormatter = SettingKey[(GroupResult => GrowlResultFormat)]("group-formatter", "Function used to format a test group result.")
   val aggregateFormatter = SettingKey[(AggregateResult => GrowlResultFormat)]("aggregate-formatter", "Function used to format an aggregation of test results.")
   val defaultImagePath = SettingKey[String]("default-image-path", "Default path used to resolve growl test images.")
+  val growler = SettingKey[Growler]("growler", "Interface used to growl test results at users.  RRRRRRRRR!")
 
   private def growlingTestListenerTask: Initialize[sbt.Task[sbt.TestReportListener]] =
-    (groupFormatter in Growl, exceptionFormatter in Growl, aggregateFormatter in Growl, defaultImagePath in Growl, streams) map {
-      (resFmt, expFmt, aggrFmt, defaultPath, out) =>
-        new GrowlingTestsListener(resFmt, expFmt, aggrFmt, defaultPath, out.log)
+    (groupFormatter in Growl, exceptionFormatter in Growl, aggregateFormatter in Growl, growler in Growl, streams) map {
+      (resFmt, expFmt, aggrFmt, growler, out) =>
+        new GrowlingTestsListener(resFmt, expFmt, aggrFmt, growler, out.log)
     }
 
   def growlSettings: Seq[Setting[_]] = inConfig(Growl)(Seq(
@@ -29,6 +30,7 @@ object GrowlingTests extends Plugin {
         t.getMessage, true, None
       )
     },
+    growler <<= defaultImagePath(Growler.apply),
     groupFormatter <<= (images) {
       (imgs) =>
         (res: GroupResult) =>

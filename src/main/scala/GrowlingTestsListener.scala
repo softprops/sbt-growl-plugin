@@ -42,8 +42,7 @@ class GrowlingTestsListener(
   groupFormatter: GroupResult => GrowlResultFormat,
   exceptionFormatter:(String, Throwable) => GrowlResultFormat,
   aggregateFormatter: AggregateResult => GrowlResultFormat,
-  defaultImagePath: String, log: sbt.Logger) extends TestsListener {
-  import meow._
+  growler: Growler, log: sbt.Logger) extends TestsListener {
 
   private var skipped, errors, passed, failures = 0
 
@@ -70,23 +69,15 @@ class GrowlingTestsListener(
 
   /** called when test group is completed */
   def endGroup(name: String, result: TestResult.Value) =
-    notify(groupFormatter(GroupResult(name, result)))
+    growler.notify(groupFormatter(GroupResult(name, result)))
 
   /** called when all tests are complete */
   def doComplete(status: TestResult.Value) = {
 		val all = failures + errors + skipped + passed
-    notify(aggregateFormatter(AggregateResult(status, all, failures, errors, passed, skipped)))
+    growler.notify(aggregateFormatter(AggregateResult(status, all, failures, errors, passed, skipped)))
 	}
 
   /** called if there was an error during test */
   def endGroup(name: String, t: Throwable) =
-    notify(exceptionFormatter(name, t))
-
-  /** Sends growl notifications */
-  protected def notify(f: GrowlResultFormat) = {
-    val img = f.imagePath.getOrElse(defaultImagePath)
-    val base = Growl title(f.title) identifier(f.id.getOrElse(f.title)) message(f.message)
-    val rich = if(img.isEmpty) base else base.image(img)
-    (if(f.sticky) rich.sticky() else rich).meow
-  }
+    growler.notify(exceptionFormatter(name, t))
 }
