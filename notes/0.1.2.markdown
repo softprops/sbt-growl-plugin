@@ -14,6 +14,6 @@ Custom Icon
 
 ![pass](http://i.imgur.com/7I9qF.png)
 
-[jsuereth]: https://github.com/
+[jsuereth]: https://github.com/jsuereth
 [readme]: https://github.com/softprops/sbt-growl-plugin/#readme
 
