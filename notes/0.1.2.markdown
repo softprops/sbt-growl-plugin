@@ -1,10 +1,18 @@
-- support for Unbuntu [jsuereth]
+- support for Ubuntu [jsuereth]
 - default logo is now scala lang logo [jsuereth]
 - by default looks for `pass.png`, `fail.png`, `error.png` [jsuereth]
 - default images path is now `~/.sbt/growl/icons` [jsuereth]
 - settings applied by default [jsuereth]
 
 See the updated [README][readme] for more info
+
+Default Icon
+
+![fail](http://i.imgur.com/iPc8N.png)
+
+Custom Icon
+
+![pass](http://i.imgur.com/7I9qF.png)
 
 [jsuereth]: https://github.com/
 [readme]: https://github.com/softprops/sbt-growl-plugin/#readme
