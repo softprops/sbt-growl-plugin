@@ -4,16 +4,19 @@ import sbt._
 import Keys._
 import sbt.Project.Initialize
 
-object GrowlingTests extends Plugin {
+object GrowlingTests extends sbt.Plugin {
+  import GrowlKeys._
 
-  val Growl = config("growl") extend(Runtime)
+  object GrowlKeys {
+    val images = SettingKey[GrowlTestImages]("images", "Object defining paths of test images used for growl notification.")
+    val exceptionFormatter = SettingKey[(String, Throwable) => GrowlResultFormat]("exception-formatter", "Function used to format test exception.")
+    val groupFormatter = SettingKey[(GroupResult => GrowlResultFormat)]("group-formatter", "Function used to format a test group result.")
+    val aggregateFormatter = SettingKey[(AggregateResult => GrowlResultFormat)]("aggregate-formatter", "Function used to format an aggregation of test results.")
+    val defaultImagePath = SettingKey[File]("default-image-path", "Default path used to resolve growl test images.")
+    val growler = SettingKey[Growler]("growler", "Interface used to growl test results at users.  RRRRRRRRR!")
+  }
 
-  val images = SettingKey[GrowlTestImages]("images", "Object defining paths of test images used for growl notification.")
-  val exceptionFormatter = SettingKey[(String, Throwable) => GrowlResultFormat]("exception-formatter", "Function used to format test exception.")
-  val groupFormatter = SettingKey[(GroupResult => GrowlResultFormat)]("group-formatter", "Function used to format a test group result.")
-  val aggregateFormatter = SettingKey[(AggregateResult => GrowlResultFormat)]("aggregate-formatter", "Function used to format an aggregation of test results.")
-  val defaultImagePath = SettingKey[File]("default-image-path", "Default path used to resolve growl test images.")
-  val growler = SettingKey[Growler]("growler", "Interface used to growl test results at users.  RRRRRRRRR!")
+  val Growl = config("growl")
 
   override val settings = super.settings ++ growlSettings
 
