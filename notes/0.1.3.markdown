@@ -1,0 +1,2 @@
+* published for sbt 0.11.0 and 0.11.1
+* keys are now defined within a `GrowlKeys` module
