@@ -16,19 +16,19 @@ Install the `libnotify-bin` package.
 
 ### Project Configuration
 
-To install on a per-project basis, create a `build.sbt` file under `project/plugins/` in your sbt project
+To install on a per-project basis, add the following to your plugin definition file
 
     resolvers += "less is" at "http://repo.lessis.me"
 
-    libraryDependencies <+= sbtVersion(v => "me.lessis" %% "sbt-growl-plugin" % "0.1.2-%s".format(v))
+    addSbtPlugin("me.lessis" % "sbt-growl-plugin" % "0.1.3")
 
-To install globally, create a `Build.scala` file under `~/.sbt/plugins/project` directory
+To install globally, create a `Build.scala` file under `~/.sbt/plugins/project` directory and add the following
 
     import sbt._
     object PluginDef extends Build {
       override def projects = Seq(root)
       lazy val root = Project("plugins", file(".")) dependsOn(growl)
-      lazy val growl = uri("git://github.com/softprops/sbt-growl-plugin.git#0.1.2")
+      lazy val growl = uri("git://github.com/softprops/sbt-growl-plugin.git#0.1.3")
     }
 
 Run your tests with the sbt `test` task and you'll see the magikz.
@@ -49,7 +49,7 @@ The directory in which Growl looks for icons can be configured by adding this to
 
 You can configure images individually by reconfiguring the GrowlTestImages class.  e.g.
 
-    images in Growl <<= (images in Growl)(i => i.copy(fail = Some("/better/fail/icon.png")))
+    (GrowlKeys.images in GrowlKeys.Growl) <<= (GrowlKeys.images in GrowlKeys.Growl)(i => i.copy(fail = Some("/better/fail/icon.png")))
 
 
 ## todo
