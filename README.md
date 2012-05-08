@@ -18,10 +18,11 @@ Install the `libnotify-bin` package.
 
 To install on a per-project basis, add the following to your plugin definition file
 
-    resolvers += "less is" at "http://repo.lessis.me"
-
     addSbtPlugin("me.lessis" % "sbt-growl-plugin" % "0.1.3")
 
+    resolvers += Resolver.url("sbt-plugin-releases",
+      url("http://scalasbt.artifactoryonline.com/scalasbt/sbt-plugin-releases/"))(
+      Resolver.ivyStylePatterns)
 To install globally, create a `Build.scala` file under `~/.sbt/plugins/project` directory and add the following
 
     import sbt._
@@ -56,4 +57,4 @@ You can configure images individually by reconfiguring the GrowlTestImages class
 
 * support like notifiers on other OS's
 
-2010-2011 Doug Tangren (softprops) + Josh Suereth (jsuereth)
+2010-2012 Doug Tangren (softprops) + Josh Suereth (jsuereth)
