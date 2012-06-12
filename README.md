@@ -1,6 +1,6 @@
 # Growling Tests
 
-An [sbt](https://github.com/harrah/xsbt#readme) 0.10.* plugin that growls/notifies test results.
+An [sbt](https://github.com/harrah/xsbt#readme) 0.12.* plugin that growls/notifies test results.
 
 ## Install
 
@@ -20,9 +20,8 @@ To install on a per-project basis, add the following to your plugin definition f
 
     addSbtPlugin("me.lessis" % "sbt-growl-plugin" % "0.1.3")
 
-    resolvers += Resolver.url("sbt-plugin-releases",
-      url("http://scalasbt.artifactoryonline.com/scalasbt/sbt-plugin-releases/"))(
-      Resolver.ivyStylePatterns)
+    resolvers += Classpaths.sbtPluginReleases
+
 To install globally, create a `Build.scala` file under `~/.sbt/plugins/project` directory and add the following
 
     import sbt._
