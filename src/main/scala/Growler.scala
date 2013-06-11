@@ -14,7 +14,7 @@ object Growler {
     def isLibNotifyBinFriendly = try {
       Process("which notify-send").!! matches ".*notify-send\\s+"
     } catch {
-      case e => false
+      case e: Exception => false
     }
     // TODO - Is this enough or too strong?
     def isMac = System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0
@@ -53,7 +53,7 @@ final class LibNotifyBinGrowler extends Growler {
       msg.title, msg.message
       )
     val sender = Process("notify-send" +: args)
-    sender !
+    sender.!
   }
   override def toString = "notify-send"
 }

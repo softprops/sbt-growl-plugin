@@ -1,6 +1,7 @@
 package growl
 
 import sbt._
+import testing._
 import org.scalatools.testing.{Logger => TLogger, Event => TEvent, Result => TResult}
 
 /** Encapsulates info about a group's test results
@@ -43,7 +44,8 @@ class GrowlingTestsListener(
 
   private var skipped, errors, passed, failures = 0
 
-  def doInit {
+  /** called once at beginning */
+  def doInit() {
     skipped = 0
     errors = 0
     passed = 0
@@ -54,15 +56,14 @@ class GrowlingTestsListener(
   def startGroup(name: String) = { }
 
   /** called for each test method or equivalent */
-  def testEvent(event: TestEvent) = event.detail.foreach(count)
+  def testEvent(event: TestEvent) = {
+    val result = SuiteResult(event.detail)
+    errors   += result.errorCount
+    passed   += result.passedCount
+    failures += result.failureCount
+    skipped  += result.skippedCount
+  }
 
-  private def count(event: TEvent): Unit =
-    event.result match {
-      case TResult.Error => errors += 1
-      case TResult.Success => passed += 1
-      case TResult.Failure => failures += 1
-      case TResult.Skipped => skipped += 1
-    }
 
   /** called when test group is completed */
   def endGroup(name: String, result: TestResult.Value) =

@@ -18,9 +18,9 @@ object GrowlingTests extends sbt.Plugin {
 
   val Growl = config("growl")
 
-  override val settings = super.settings ++ growlSettings
+//  override val settings = super.settings ++ growlSettings
 
-  private def growlingTestListenerTask: Initialize[sbt.Task[sbt.TestReportListener]] =
+  private def growlingTestListenerTask: Def.Initialize[sbt.Task[sbt.TestReportListener]] =
     (groupFormatter in Growl, exceptionFormatter in Growl, aggregateFormatter in Growl, growler in Growl, streams) map {
       (resFmt, expFmt, aggrFmt, growler, out) =>
         new GrowlingTestsListener(resFmt, expFmt, aggrFmt, growler, out.log)
