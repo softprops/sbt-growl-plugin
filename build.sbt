@@ -11,9 +11,9 @@ version <<= sbtVersion(v =>
 
 scalacOptions ++= Seq("-feature", "-deprecation")
 
-sbtVersion in Global := "0.13.0-Beta2"
+sbtVersion in Global := "0.13.0-RC1"
 
-scalaVersion in Global := "2.10.2-RC2"
+scalaVersion in Global := "2.10.2"
 
 resolvers += Opts.resolver.sonatypeReleases
 
