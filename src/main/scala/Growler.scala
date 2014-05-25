@@ -16,11 +16,18 @@ object Growler {
     } catch {
       case e: Exception => false
     }
+
+    def isGrowlNotifyFriendly = try {
+      (Process("where growlnotify").!!).replaceAll("[\n\r]", " ") matches ".*growlnotify.*"
+    } catch {
+      case e: Exception => false
+    }
     // TODO - Is this enough or too strong?
     def isMac = System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0
 
     if(isMac) new MacGrowler
     else if(isLibNotifyBinFriendly) new LibNotifyBinGrowler
+    else if(isGrowlNotifyFriendly) new GrowlNotifyGrowler
     else new NullGrowler
   }
 }
@@ -56,6 +63,21 @@ final class LibNotifyBinGrowler extends Growler {
     sender.!
   }
   override def toString = "notify-send"
+}
+
+// Note: This class uses growlnotify which may be installed on windows
+final class GrowlNotifyGrowler extends Growler {
+  override def notify(msg: GrowlResultFormat): Unit = {
+    val args = Seq(
+      "/t:sbt test",
+      "/silent:true",
+      "/s:" + msg.sticky.toString,
+      msg.title + " " + msg.message
+      )
+    val sender = Process("growlnotify.exe" +: args)
+    sender.!
+  }
+  override def toString = "growlnotify"
 }
 
 
