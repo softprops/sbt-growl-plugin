@@ -26,7 +26,7 @@ object GrowlingTests extends sbt.Plugin {
         new GrowlingTestsListener(resFmt, expFmt, aggrFmt, growler, out.log)
     }
 
-  def growlSettings: Seq[Setting[_]] = inConfig(Growl)(Seq(
+  val growlSettings: Seq[Setting[_]] = inConfig(Growl)(Seq(
     images <<= defaultImagePath apply { path =>
       def setIfExists(name: String) = {
         val file = path / name
