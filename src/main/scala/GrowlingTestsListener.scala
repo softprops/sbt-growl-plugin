@@ -40,7 +40,7 @@ class GrowlingTestsListener(
   groupFormatter: GroupResult => GrowlResultFormat,
   exceptionFormatter:(String, Throwable) => GrowlResultFormat,
   aggregateFormatter: AggregateResult => GrowlResultFormat,
-  growler: Growler, log: sbt.Logger) extends TestsListener {
+  growler: Growler, log: sbt.Logger, growlGroup: Boolean, growlAggregate: Boolean) extends TestsListener {
 
   private var skipped, errors, passed, failures = 0
 
@@ -66,16 +66,24 @@ class GrowlingTestsListener(
 
 
   /** called when test group is completed */
-  def endGroup(name: String, result: TestResult.Value) =
-    growler.notify(groupFormatter(GroupResult(name, result)))
+  def endGroup(name: String, result: TestResult.Value) = {
+    if (growlGroup) {
+      growler.notify(groupFormatter(GroupResult(name, result)))
+    }
+  }
 
   /** called when all tests are complete */
   def doComplete(status: TestResult.Value) = {
-		val all = failures + errors + skipped + passed
-    growler.notify(aggregateFormatter(AggregateResult(status, all, failures, errors, passed, skipped)))
+    if (growlAggregate) {
+      val all = failures + errors + skipped + passed
+      growler.notify(aggregateFormatter(AggregateResult(status, all, failures, errors, passed, skipped)))
+    }
 	}
 
   /** called if there was an error during test */
-  def endGroup(name: String, t: Throwable) =
-    growler.notify(exceptionFormatter(name, t))
+  def endGroup(name: String, t: Throwable) = {
+    if (growlGroup) {
+      growler.notify(exceptionFormatter(name, t))
+    }
+  }
 }
