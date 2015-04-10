@@ -14,6 +14,8 @@ object GrowlingTests extends sbt.Plugin {
     val aggregateFormatter = SettingKey[(AggregateResult => GrowlResultFormat)]("aggregate-formatter", "Function used to format an aggregation of test results.")
     val defaultImagePath = SettingKey[File]("default-image-path", "Default path used to resolve growl test images.")
     val growler = SettingKey[Growler]("growler", "Interface used to growl test results at users.  RRRRRRRRR!")
+    val growlGroup = SettingKey[Boolean]("growl-group", "Growl group results")
+    val growlAggregate = SettingKey[Boolean]("growl-aggregate", "Growl aggregate results")
   }
 
   val Growl = config("growl")
@@ -21,9 +23,9 @@ object GrowlingTests extends sbt.Plugin {
 //  override val settings = super.settings ++ growlSettings
 
   private def growlingTestListenerTask: Def.Initialize[sbt.Task[sbt.TestReportListener]] =
-    (groupFormatter in Growl, exceptionFormatter in Growl, aggregateFormatter in Growl, growler in Growl, streams) map {
-      (resFmt, expFmt, aggrFmt, growler, out) =>
-        new GrowlingTestsListener(resFmt, expFmt, aggrFmt, growler, out.log)
+    (groupFormatter in Growl, exceptionFormatter in Growl, aggregateFormatter in Growl, growler in Growl, streams, growlGroup in Growl, growlAggregate in Growl) map {
+      (resFmt, expFmt, aggrFmt, growler, out, growlGroup, growlAggregate) =>
+        new GrowlingTestsListener(resFmt, expFmt, aggrFmt, growler, out.log, growlGroup, growlAggregate)
     }
 
   val growlSettings: Seq[Setting[_]] = inConfig(Growl)(Seq(
@@ -88,7 +90,9 @@ object GrowlingTests extends sbt.Plugin {
             }
           )
     },
-    defaultImagePath := file(System.getProperty("user.home")) / ".sbt" / "growl" / "icons"
+    defaultImagePath := file(System.getProperty("user.home")) / ".sbt" / "growl" / "icons",
+    growlGroup := true,
+    growlAggregate := true
   )) ++ Seq(
     testListeners <+= growlingTestListenerTask
   )
