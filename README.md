@@ -16,7 +16,7 @@ Install the `libnotify-bin` package.
 
 ### On Windows (7) / GIT bash
 
-Install the `growl for windows` package. This is availble from [growl for windows](http://www.growlforwindows.com/gfw/help/growlnotify.aspx). This must be on the windows path. Note that the usage of growlnotify has only been tested from cygwin (specifically GIT bash). The sbt growl plugin uses growlnotify.exe, not growlnotify.com.
+Install the `growl for windows` package. This is available from [growl for windows](http://www.growlforwindows.com/gfw/help/growlnotify.aspx). This must be on the windows path. Note that the usage of growlnotify has only been tested from cygwin (specifically GIT bash). The sbt growl plugin uses growlnotify.exe, not growlnotify.com.
 
 ### Project Configuration
 
