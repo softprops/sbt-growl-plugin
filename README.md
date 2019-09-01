@@ -45,7 +45,7 @@ By default the growl plugin looks for icons in `~/.sbt/growl/icons/`.  Specifica
 * `fail.png` - used when tests fail
 * `error.png` - used for catastrophic failures
 
-If an icon is not found for Growl, the plugin extracts a Scala logo and places it in `~/.sbt/growl/icons/scala-logo.png` to use for notifications.
+If an icon is not found for Growl, the plugin extracts a default icon and places it in `~/.sbt/growl/icons/`.
 
 The directory in which Growl looks for icons can be configured by adding this to your `build.sbt` file:
 
