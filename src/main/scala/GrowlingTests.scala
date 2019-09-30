@@ -2,7 +2,7 @@ package growl
 
 import sbt._
 import Keys._
-import sbt.Project.Initialize
+import sbt.Def.Initialize
 
 object GrowlingTests extends sbt.Plugin {
   import GrowlKeys._
@@ -16,9 +16,9 @@ object GrowlingTests extends sbt.Plugin {
     val growler = SettingKey[Growler]("growler", "Interface used to growl test results at users.  RRRRRRRRR!")
   }
 
-  val Growl = config("growl")
+  val Growl = config("growl") extend(Test)
 
-//  override val settings = super.settings ++ growlSettings
+  override lazy val projectSettings = growlSettings
 
   private def growlingTestListenerTask: Def.Initialize[sbt.Task[sbt.TestReportListener]] =
     (groupFormatter in Growl, exceptionFormatter in Growl, aggregateFormatter in Growl, growler in Growl, streams) map {

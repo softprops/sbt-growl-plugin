@@ -11,6 +11,12 @@ trait Growler {
 
 object Growler {
   def apply(): Growler = {
+    def isNotificationCenterFriendly = try {
+      Process("which terminal-notifier").!! matches ".*terminal-notifier\\s+"
+    } catch {
+      case e: Exception => false
+    }
+
     def isLibNotifyBinFriendly = try {
       Process("which notify-send").!! matches ".*notify-send\\s+"
     } catch {
@@ -25,7 +31,8 @@ object Growler {
     // TODO - Is this enough or too strong?
     def isMac = System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0
 
-    if(isMac) new MacGrowler
+    if(isMac && isNotificationCenterFriendly) new NotificationCenterGrowler
+    else if(isMac) new MacGrowler
     else if(isLibNotifyBinFriendly) new LibNotifyBinGrowler
     else if(isGrowlNotifyFriendly) new GrowlNotifyGrowler
     else new NullGrowler
@@ -37,9 +44,22 @@ final class MacGrowler extends Growler {
     val img = msg.imagePath.getOrElse("")
     val base = meow.Growl title(msg.title) identifier(msg.id.getOrElse(msg.title)) message(msg.message)
     val rich = if(img.isEmpty) base else base.image(img)
-    (if(msg.sticky) rich.sticky() else rich).meow    
+    (if(msg.sticky) rich.sticky() else rich).meow
   }
   override def toString = "growl"
+}
+
+final class NotificationCenterGrowler extends Growler {
+  override def notify(msg: GrowlResultFormat): Unit = {
+    val args = Seq(
+      "-appIcon", msg.imagePath.getOrElse(""),
+      "-title", msg.title,
+      "-message", msg.message,
+      "-activate", "com.apple.Terminal")       // TODO some weirdos still use iTerm
+    val sender = Process("terminal-notifier" +: args)
+    sender.!
+  }
+  override def toString = "terminal-notifier"
 }
 
 final class NullGrowler extends Growler {

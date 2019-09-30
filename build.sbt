@@ -5,15 +5,15 @@ name := "sbt-growl-plugin"
 organization := "me.lessis"
 
 version <<= sbtVersion(v =>
-  if (v.startsWith("0.11") || v.startsWith("0.12") || v.startsWith("0.13")) "0.1.3"
+  if (v.startsWith("0.11") || v.startsWith("0.12") || v.startsWith("0.13")) "0.1.4-SNAPSHOT"
   else error("unsupported sbt version %s" format v)
 )
 
 scalacOptions ++= Seq("-feature", "-deprecation")
 
-sbtVersion in Global := "0.13.0-RC1"
+sbtVersion in Global := "0.13.6"
 
-scalaVersion in Global := "2.10.2"
+scalaVersion in Global := "2.10.4"
 
 resolvers += Opts.resolver.sonatypeReleases
 
